@@ -36,10 +36,12 @@ public class ChessBoardTest extends TestCase {
         Assert.assertTrue(isValidPosition);
     }
 
+    //Was an invalid test with an x coordinate of 11 when the max could only be 7
+    //Should have been assertFalse rather than asserTrue as is made clear by the method name.
     @Test
     public void testIsLegalBoardPosition_False_X_equals_11_Y_equals_5() {
         boolean isValidPosition = testSubject.isLegalBoardPosition(11, 5);
-        assertTrue(isValidPosition);
+        assertFalse(isValidPosition);
     }
 
     @Test
