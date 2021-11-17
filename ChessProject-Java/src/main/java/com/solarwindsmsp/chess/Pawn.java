@@ -1,5 +1,9 @@
 package com.solarwindsmsp.chess;
 
+/**
+ * A class to deal with pawns.  Could make use of an interface to create a generic piece interface which over classes
+ * can implement.
+ */
 public class Pawn {
 
     private ChessBoard chessBoard;
@@ -43,20 +47,40 @@ public class Pawn {
         pieceColor = value;
     }
 
+    /**
+     * Moves the chess piece.  Currently only MOVE is supported.  CAPTURE will be added later
+     * @param movementType
+     * @param newX
+     * @param newY
+     */
     public void move(MovementType movementType, int newX, int newY) {
-        //could split out valid move check into new method to aid readability
-        if(pieceColor.equals(PieceColor.WHITE)) {
+        if (isValidMove(movementType, newX, newY)) {
+            setXCoordinate(newX);
+            setYCoordinate(newY);
+        }
+    }
+
+    //Split valid move checks out to a separate method in order to aid readability.
+    private boolean isValidMove(MovementType movementType, int newX, int newY) {
+
+        chessBoard = new ChessBoard();
+        if(!getChessBoard().isLegalBoardPosition(newX, newY)){
+            return false;
+        }
+
+        if(getPieceColor().equals(PieceColor.WHITE)) {
             if (movementType == MovementType.MOVE && (newX == getXCoordinate() && newY == getYCoordinate() + 1)) {
-                setXCoordinate(newX);
-                setYCoordinate(yCoordinate = newY);
+                return true;
+            } else {
+                return false;
             }
         } else {
             if (movementType == MovementType.MOVE && (newX == getXCoordinate() && newY == getYCoordinate() - 1)) {
-                setXCoordinate(newX);
-                setYCoordinate(yCoordinate = newY);
+                return true;
+            } else{
+                return false;
             }
         }
-//        throw new UnsupportedOperationException("Need to implement Pawn.Move()") ;
     }
 
     @Override
